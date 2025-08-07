@@ -146,4 +146,233 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 1500);
     });
   }
+
+  // Reviews slider functionality
+  const reviewsSlider = document.querySelector('.reviews-slider');
+  const reviewsTrack = document.querySelector('.reviews-track');
+  const reviewsPrev = document.querySelector('.reviews-prev');
+  const reviewsNext = document.querySelector('.reviews-next');
+  const reviewsDots = document.querySelector('.reviews-dots');
+
+  if (reviewsSlider && reviewsTrack) {
+    let currentSlide = 0;
+    let isAutoPlaying = true;
+    let autoPlayInterval;
+    let startX = 0;
+    let isDragging = false;
+
+    // Get all review cards
+    const reviewCards = document.querySelectorAll('.review-card');
+    const totalSlides = reviewCards.length;
+
+    // Calculate slides per view based on screen size
+    function getSlidesPerView() {
+      if (window.innerWidth >= 1024) return 3; // lg: 3 cards
+      if (window.innerWidth >= 768) return 2;  // md: 2 cards
+      return 1; // mobile: 1 card
+    }
+
+    // Calculate total pages
+    function getTotalPages() {
+      return Math.ceil(totalSlides / getSlidesPerView());
+    }
+
+    // Create dots indicators
+    function createDots() {
+      reviewsDots.innerHTML = '';
+      const totalPages = getTotalPages();
+      
+      for (let i = 0; i < totalPages; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-cyber-accent w-6' : 'bg-cyber-border hover:bg-cyber-accent/50'}`;
+        dot.addEventListener('click', () => goToSlide(i));
+        reviewsDots.appendChild(dot);
+      }
+    }
+
+    // Update dots
+    function updateDots() {
+      const dots = reviewsDots.querySelectorAll('button');
+      const currentPage = Math.floor(currentSlide / getSlidesPerView());
+      
+      dots.forEach((dot, index) => {
+        if (index === currentPage) {
+          dot.className = 'w-6 h-2 rounded-full bg-cyber-accent transition-all duration-300';
+        } else {
+          dot.className = 'w-2 h-2 rounded-full bg-cyber-border hover:bg-cyber-accent/50 transition-all duration-300';
+        }
+      });
+    }
+
+    // Go to specific slide
+    function goToSlide(slideIndex) {
+      const slidesPerView = getSlidesPerView();
+      const maxSlide = totalSlides - slidesPerView;
+      
+      currentSlide = Math.max(0, Math.min(slideIndex * slidesPerView, maxSlide));
+      
+      const translateX = -(currentSlide * (100 / slidesPerView));
+      reviewsTrack.style.transform = `translateX(${translateX}%)`;
+      
+      updateDots();
+    }
+
+    // Next slide
+    function nextSlide() {
+      const slidesPerView = getSlidesPerView();
+      const maxSlide = totalSlides - slidesPerView;
+      
+      if (currentSlide >= maxSlide) {
+        currentSlide = 0; // Loop back to start
+      } else {
+        currentSlide += slidesPerView;
+      }
+      
+      const translateX = -(currentSlide * (100 / slidesPerView));
+      reviewsTrack.style.transform = `translateX(${translateX}%)`;
+      
+      updateDots();
+    }
+
+    // Previous slide
+    function prevSlide() {
+      const slidesPerView = getSlidesPerView();
+      const maxSlide = totalSlides - slidesPerView;
+      
+      if (currentSlide <= 0) {
+        currentSlide = maxSlide; // Loop to end
+      } else {
+        currentSlide -= slidesPerView;
+      }
+      
+      const translateX = -(currentSlide * (100 / slidesPerView));
+      reviewsTrack.style.transform = `translateX(${translateX}%)`;
+      
+      updateDots();
+    }
+
+    // Auto-play functionality
+    function startAutoPlay() {
+      if (isAutoPlaying) {
+        autoPlayInterval = setInterval(nextSlide, 8000); // Increased from 4000ms to 8000ms
+      }
+    }
+
+    function stopAutoPlay() {
+      clearInterval(autoPlayInterval);
+    }
+
+    // Touch/swipe support
+    function handleTouchStart(e) {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      stopAutoPlay();
+    }
+
+    function handleTouchMove(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+    }
+
+    function handleTouchEnd(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      const endX = e.changedTouches[0].clientX;
+      const diffX = startX - endX;
+      
+      if (Math.abs(diffX) > 50) { // Minimum swipe distance
+        if (diffX > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+      
+      if (isAutoPlaying) {
+        setTimeout(startAutoPlay, 1000); // Resume auto-play after 1 second
+      }
+    }
+
+    // Mouse drag support
+    function handleMouseDown(e) {
+      startX = e.clientX;
+      isDragging = true;
+      stopAutoPlay();
+      reviewsTrack.style.cursor = 'grabbing';
+    }
+
+    function handleMouseMove(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+    }
+
+    function handleMouseUp(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      const endX = e.clientX;
+      const diffX = startX - endX;
+      
+      if (Math.abs(diffX) > 50) { // Minimum drag distance
+        if (diffX > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+      
+      reviewsTrack.style.cursor = 'grab';
+      
+      if (isAutoPlaying) {
+        setTimeout(startAutoPlay, 1000); // Resume auto-play after 1 second
+      }
+    }
+
+    // Event listeners
+    reviewsNext.addEventListener('click', () => {
+      nextSlide();
+      stopAutoPlay();
+      if (isAutoPlaying) {
+        setTimeout(startAutoPlay, 2000);
+      }
+    });
+
+    reviewsPrev.addEventListener('click', () => {
+      prevSlide();
+      stopAutoPlay();
+      if (isAutoPlaying) {
+        setTimeout(startAutoPlay, 2000);
+      }
+    });
+
+    // Touch events
+    reviewsTrack.addEventListener('touchstart', handleTouchStart, { passive: false });
+    reviewsTrack.addEventListener('touchmove', handleTouchMove, { passive: false });
+    reviewsTrack.addEventListener('touchend', handleTouchEnd);
+
+    // Mouse events
+    reviewsTrack.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    // Pause auto-play on hover
+    reviewsSlider.addEventListener('mouseenter', stopAutoPlay);
+    reviewsSlider.addEventListener('mouseleave', () => {
+      if (isAutoPlaying) {
+        startAutoPlay();
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      createDots();
+      goToSlide(0); // Reset to first slide on resize
+    });
+
+    // Initialize
+    reviewsTrack.style.cursor = 'grab';
+    createDots();
+    startAutoPlay();
+  }
 }); 
