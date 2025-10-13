@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers - Zeta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              bg: '#0a0c12',
+              component: '#181c27',
+              accent: '#00f0c0',
+              accentAlt: '#ff2a6d',
+              text: '#e0e7ff',
+              secondary: '#a0aed0',
+              border: '#3a3f5e'
+            }
+          },
+          fontFamily: {
+            mono: ['Fira Code', 'monospace'],
+            display: ['Orbitron', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0,240,192,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,240,192,0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #00f0c0, #ff2a6d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-cyber-bg font-mono text-cyber-text antialiased">
+  
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4 backdrop-blur-sm bg-cyber-bg/80 border-b border-cyber-border">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="index.html" class="text-cyber-accent font-display text-2xl font-bold tracking-wider">ZETA<span class="text-cyber-accentAlt">_</span></a>
+      <a href="index.html" class="text-cyber-secondary hover:text-cyber-accent transition-colors">← Back to Home</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="min-h-screen cyber-grid flex items-center justify-center px-4 pt-24 pb-12">
+    <div class="container mx-auto max-w-4xl">
+      <div class="bg-cyber-component border border-cyber-border rounded-lg p-8 md:p-12 text-center">
+        <div class="h-1 bg-gradient-to-r from-cyber-accent to-cyber-accentAlt mb-8"></div>
+        
+        <h1 class="text-4xl md:text-5xl font-display font-bold mb-6">
+          Join <span class="gradient-text">Our Team</span>
+        </h1>
+        
+        <div class="mb-8">
+          <svg class="w-24 h-24 mx-auto text-cyber-accentAlt opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        
+        <h2 class="text-2xl font-bold text-white mb-4">No Open Positions Currently</h2>
+        <p class="text-cyber-secondary mb-8 max-w-2xl mx-auto">
+          We're not hiring at the moment, but we're always interested in connecting with talented individuals. 
+          Feel free to reach out for future opportunities!
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="index.html" class="bg-cyber-accent hover:bg-cyber-accent/90 text-cyber-bg font-bold py-3 px-8 rounded transition-all duration-300 inline-block">
+            Back to Home
+          </a>
+          <a href="index.html#contact" class="bg-transparent border border-cyber-accentAlt text-cyber-accentAlt hover:bg-cyber-accentAlt/10 font-bold py-3 px-8 rounded transition-all duration-300 inline-block">
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
+
