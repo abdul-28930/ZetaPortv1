@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const x = Math.random() * 100;
       const y = Math.random() * 100;
       const size = Math.random() * 3 + 1;
-      const color = Math.random() > 0.5 ? '#00f0c0' : '#ff2a6d';
+      const colors = ['#00ff88', '#ff00ff', '#00d4ff'];
+      const color = colors[Math.floor(Math.random() * colors.length)];
       const opacity = Math.random() * 0.5 + 0.1;
       const duration = Math.random() * 50 + 20;
       
@@ -142,13 +143,13 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(() => {
         button.innerHTML = '<span class="inline-flex items-center"><svg class="h-4 w-4 mr-2 text-cyber-bg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Message Sent!</span>';
         button.classList.add('bg-green-500');
-        button.classList.remove('bg-cyber-accent', 'hover:bg-cyber-accent/90');
+        button.classList.remove('bg-cyber-accent');
         
         setTimeout(() => {
           this.reset();
           button.innerHTML = originalText;
           button.classList.remove('bg-green-500');
-          button.classList.add('bg-cyber-accent', 'hover:bg-cyber-accent/90');
+          button.classList.add('bg-cyber-accent');
           button.disabled = false;
         }, 3000);
       })
