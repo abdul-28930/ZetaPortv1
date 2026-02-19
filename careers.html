@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Careers - Zeta</title>
   <meta name="description" content="Join Zeta. We're building the future of software—AI/ML, web, mobile. No open roles right now; reach out for future opportunities.">
+  <link rel="canonical" href="https://yoursite.com/careers.html">
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="careers, jobs, Zeta, software engineering, AI, tech jobs">
   <meta property="og:title" content="Careers - Zeta">
   <meta property="og:description" content="Join Zeta. We're building the future of software—AI/ML, web, mobile. No open roles right now; reach out for future opportunities.">
   <meta property="og:type" content="website">
@@ -15,20 +18,23 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Careers - Zeta",
-    "description": "Careers at Zeta. Join our team building next-gen software: AI/ML, web and mobile development, data science.",
-    "url": "https://yoursite.com/careers.html",
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Zeta",
-      "url": "https://yoursite.com"
-    },
-    "about": {
-      "@type": "Organization",
-      "name": "Zeta",
-      "url": "https://yoursite.com"
-    }
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Careers - Zeta",
+        "description": "Careers at Zeta. Join our team building next-gen software: AI/ML, web and mobile development, data science.",
+        "url": "https://yoursite.com/careers.html",
+        "isPartOf": { "@type": "WebSite", "name": "Zeta", "url": "https://yoursite.com" },
+        "about": { "@type": "Organization", "name": "Zeta", "url": "https://yoursite.com" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://yoursite.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Careers", "item": "https://yoursite.com/careers.html" }
+        ]
+      }
+    ]
   }
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
